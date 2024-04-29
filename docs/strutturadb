@@ -1,0 +1,33 @@
+
+
+article
+-----
+(PK) ID INT
+image VARCHAR(16) [link]
+title VARCHAR(64)
+article TEXT
+coords_X INT
+coords_Y INT
+(FK) category_ID
+-----
+
+category
+-----
+(PK) ID INT
+name VARCHAR(16)
+-----
+
+article_randinfo
+-----
+(PK) ID INT
+(FK) randinfo_ID INT
+(FK) article_ID INT
+-----
+
+randinfo (random info)
+-----
+(PK) ID INT
+image VARCHAR(16) [link]
+information VARCHAR(16) 
+label VARCHAR(16) 
+-----

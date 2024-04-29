@@ -18,10 +18,12 @@
   "description": "",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "cjs": "^0.0.11",
+    "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "path": "^0.12.7",
-    "pup": "^0.0.2"
+    "pug": "^3.0.2"
   }
 }

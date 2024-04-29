@@ -28,39 +28,29 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("cover_image");
 
-// File posts
-async function savePosts() {
-  FileSystem.writeFile("posts.json", JSON.stringify(posts), (error) => {
-    if (error) throw error;
-  });
-}
-
-async function readPosts() {
-  FileSystem.readFile("posts.json", "utf8", (err, data) => {
-    if (err) {
-      FileSystem.writeFile("posts.json", JSON.stringify(posts), (error) => {
-        if (error) throw error;
-      });
-    } else {
-      // parse JSON string to JSON object
-      const jsonData = JSON.parse(data);
-      posts = jsonData;
-    }
-  });
-}
-
-let posts = [];
-readPosts();
-
 app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var data = [
+    crumb = "example",
+    gino = "example"
+]
+
 app.get("/", (req, res) => {
-  res.render("index", { posts });
+  res.render("home", { data });
 });
 
+app.get("/style/:filename", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/css/", req.params.filename));
+});
+
+app.get("/script/:filename", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/js/", req.params.filename));
+});
+
+
+/*
 app.get("/posts/:id", (req, res) => {
   const postId = parseInt(req.params.id);
   const post = posts.find((post) => post.id === postId);
@@ -123,7 +113,7 @@ app.get("/admin/delete/:id", (req, res) => {
   savePosts();
   res.redirect("/admin");
 });
-
+*/
 app.listen(3000, () => {
   console.log("Server avviato su http://localhost:3000");
 });
