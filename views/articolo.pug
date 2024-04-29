@@ -1,0 +1,67 @@
+include header
+
+body
+  .page-heading.header-text
+    .row
+      span.breadcrumb
+        a(href="index.html") Torna alla Home
+      h3= data.title
+
+  .single-property.section
+    .container
+      .row
+        .col-lg-8
+          .main-image
+            img(src="../style/img/labirinto_masone.jpg" alt="")
+          .main-content
+            span.category Labirinto
+            h4 Strada Masone, 121
+            p
+              strong Un capolavoro verdeggiante: 
+              |  Il Labirinto della Masone si estende per sette ettari e rappresenta il più grande labirinto in bambù del mondo. Creato da Franco Maria Ricci, editore, designer e collezionista, questo parco culturale è un'opera d'arte vivente che coniuga sapientemente natura, cultura e bellezza.
+              br
+              br
+              strong Un percorso affascinante: 
+              |  Oltre 300.000 canne di bambù di diverse specie si intrecciano dando vita a un dedalo di sentieri che invitano all'esplorazione e al disorientamento. Perdersi tra questi alti fusti verdi è un'esperienza unica e suggestiva, un viaggio alla scoperta di sé e dei segreti del labirinto.
+              br
+              br
+              strong Un rifugio per l'anima: 
+              |  Il Labirinto della Masone è un luogo ideale per staccare dalla frenesia quotidiana e immergersi nella quiete della natura. Il fruscio delle foglie di bambù, il canto degli uccelli e il profumo della terra creano un'atmosfera rilassante e rigenerante.
+              br
+              br
+              strong Un connubio di arte e cultura: 
+              |  Al centro del labirinto si trova la Casa Editrice Franco Maria Ricci, uno spazio dedicato all'arte e alla cultura. Qui potrete ammirare la collezione d'arte di Franco Maria Ricci, ricca di opere dal Cinquecento al Novecento, e visitare la biblioteca, che custodisce preziosi volumi e manoscritti.
+              br
+              br
+              strong Informazioni e prenotazioni: 
+              |  Visita il 
+              a(href="https://www.labirintodifrancomariaricci.it" target="_blank" rel="noopener") sito web del Labirinto della Masone
+              |  per consultare gli orari di apertura e per la prenotazione dei biglietti.
+              br
+              br
+
+        .col-lg-4
+          .info-table
+            // TODO: Inserti
+            ul
+              li
+                img(src="../style/img/time.png" alt="" style="max-width: 52px;")
+                h4
+                  | 2015
+                  br
+                  span Data di costruzione
+              li
+                img(src="../style/img/bamboo.png" alt="" style="max-width: 52px;")
+                h4
+                  | 300.000+
+                  br
+                  span Piante di bambù
+              li
+                img(src="../style/img/architect.png" alt="" style="max-width: 52px;")
+                h4
+                  | Franco Maria Ricci
+                  br
+                  span Ideatore
+            // TODO: Inserimento mappa locazione struttura
+
+  include footer
