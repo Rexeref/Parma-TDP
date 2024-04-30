@@ -1,4 +1,12 @@
 
+questions
+-----
+(PK) ID INT
+name VARCHAR(32)
+email VARCHAR(32)
+title VARCHAR(32)
+content VARCHAR(32)
+-----
 
 article -- è sotto inteso che questo descrivi UN luogo turistico
 -----

@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    include header
+
+  body
+    .page-heading.header-text
+      .row
+        span.breadcrumb
+          a(href="/") Torna alla Home
+        h3=data.randinfos[0].title
+
+    .single-property.section
+      .container
+        .row
+          .col-lg-8
+            .main-image
+              img(src="" + data.randinfos[0].image alt="")
+            .main-content
+              span.category= data.randinfos[0].category
+              div= data.randinfos[0].article
+
+          .col-lg-4
+            .info-table
+              #map(style='width: 100%; height: 400px;')
+              input(type="number" value=data.randinfos[0].coords_X id="coords_X" hidden)
+              input(type="number" value=data.randinfos[0].coords_Y id="coords_Y" hidden)
+              script 
+                | document.addEventListener('DOMContentLoaded', function() 
+                | {
+                | var map = L.map('map').setView([document.getElementById('coords_X').value, document.getElementById('coords_Y').value], 13);
+                | });
+              ul
+                each randinfo in data.randinfos
+                  li
+                    img(src="" + randinfo.icon alt="" style="max-width: 52px;")
+                    h4= randinfo.information
+                      br
+                      span= randinfo.label
+              
+    include footer

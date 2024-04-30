@@ -1,17 +1,18 @@
 meta(charset="utf-8")
 meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
-title= "Parma | " + title
+if !data.title
+  title= "Parma | " + data.randinfos[0].title
+else 
+  title= "Parma | " + data.title
+  
 
 meta(name="viewport", content="width=device-width", initial-scale=1)
 
-case type
-  when "home"
-    link(rel="stylesheet" href="style/bootstrap-theme.min.css")
-    link(rel="stylesheet" href="style/fontAwesome.css")
-    link(rel="stylesheet" href="style/owl-carousel.css")
-    link(rel="stylesheet" href="style/templatemo-style.css")
-  when "article"
-    link(rel="stylesheet" href="style/dettaglio.css")
+link(rel="stylesheet" href="style/bootstrap-theme.min.css")
+link(rel="stylesheet" href="style/fontAwesome.css")
+link(rel="stylesheet" href="style/owl-carousel.css")
+link(rel="stylesheet" href="style/templatemo-style.css")
+link(rel="stylesheet" href="style/dettaglio.css")
 
 link(rel="stylesheet" href="style/bootstrap.min.css")
 // Map

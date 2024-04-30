@@ -15,10 +15,11 @@ app.set("view engine", "pug");
 app.set("views", "./views");
 
 // connessione DBMS
-var con = mysql.createConnection({
+var con = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
+  database: process.env.DB_DB,
 });
 
 // multer
@@ -41,32 +42,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //// Gestione Richieste
 //
 
-
-// TODO: Eliminare questo var data orrendo d'esempio
-var data = [
-    crumb = "un-coso-lungo",
-    title = "Un Coso Lungo",
-    type = "home",
-    articles = [
-        {
-            image_cardarticolo : "image/featured_1.jpg",
-            title_cardarticolo : "Example1",
-            subtitle_cardarticolo : "Example1",
-            description_cardarticolo : "Example1",
-        },
-        {
-            image_cardarticolo : "image/featured_2.jpg",
-            title_cardarticolo : "Example2",
-            subtitle_cardarticolo : "Example2",
-            description_cardarticolo : "Example2",
-        }
-    ]
-]
-
-app.get("/", (req, res) => {
-  res.render("home", { data, pretty : true});
-});
-
 app.get("/style/:filename", (req, res) => {
     res.sendFile(path.join(__dirname, "public/css/", req.params.filename));
 });
@@ -79,6 +54,44 @@ app.get("/image/:filename", (req, res) => {
     res.sendFile(path.join(__dirname, "public/img/", req.params.filename));
 });
 
+app.get("/article/:crumb", (req, res) => {
+    var data = {
+        crumb: req.params.crumb,
+        type: "article",
+        randinfos: []
+    };
+
+    con.query("SELECT a.image, a.title, a.title_cardarticolo, a.subtitle_cardarticolo, a.description_cardarticolo, a.article, a.coords_X, a.coords_Y, c.name as category_name, r.image as icon, r.information, r.label FROM article a INNER JOIN category c ON(c.ID = a.category_ID) INNER JOIN article_randinfo ar ON(a.ID = ar.article_ID ) INNER JOIN randinfo r ON(r.ID = ar.randinfo_ID) WHERE a.crumb = ?", [req.params.crumb], 
+        (err, result) => {
+            if (err) {
+                console.error('Failed to retrieve article details:', err);
+                res.status(500).send('Database query error');
+                return;
+            }
+            console.log(result);
+            data.randinfos = result;
+            res.render("article", { data, pretty : true });
+        });
+});
+
+app.get("/", (req, res) => {
+    var data = {
+        crumb: "Home",
+        title: "Home",
+        type: "home",
+        articles: []
+    };
+
+    con.query("SELECT * FROM article", (err, result) => {
+        if (err) {
+            console.error('Failed to retrieve articles:', err);
+            res.status(500).send('Database query error');
+            return;
+        }
+        data.articles = result;
+        res.render("home", { data, pretty : true });
+    });
+});
 
 /*
 app.get("/posts/:id", (req, res) => {
