@@ -1,10 +1,15 @@
 
 
-article
+article -- è sotto inteso che questo descrivi UN luogo turistico
 -----
 (PK) ID INT
-image VARCHAR(16) [link]
+crumb VARCHAR(32) -- per generare link pagina articolo, potrebbe fare da PK
+image VARCHAR(16) -- link
+image_cardarticolo VARCHAR(16) -- link
 title VARCHAR(64)
+title_cardarticolo VARCHAR(64)
+subtitle_cardarticolo VARCHAR(64)
+description_cardarticolo VARCHAR(64)
 article TEXT
 coords_X INT
 coords_Y INT
@@ -27,7 +32,7 @@ article_randinfo
 randinfo (random info)
 -----
 (PK) ID INT
-image VARCHAR(16) [link]
+image VARCHAR(16) -- link
 information VARCHAR(16) 
 label VARCHAR(16) 
 -----

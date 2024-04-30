@@ -1,3 +1,7 @@
+//
+//// Configurazione Server
+//
+
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
@@ -6,17 +10,18 @@ const app = express();
 const bodyParser = require("body-parser");
 const FileSystem = require("fs");
 
+// Pug
 app.set("view engine", "pug");
 app.set("views", "./views");
 
-// Configurazione connessione DBMS
+// connessione DBMS
 var con = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
 });
 
-// Configurazione di multer
+// multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
@@ -29,16 +34,37 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("cover_image");
 
 app.use(express.static("public"));
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "public/img/photos")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//
+//// Gestione Richieste
+//
+
+
+// TODO: Eliminare questo var data orrendo d'esempio
 var data = [
-    crumb = "example",
-    gino = "example"
+    crumb = "un-coso-lungo",
+    title = "Un Coso Lungo",
+    type = "home",
+    articles = [
+        {
+            image_cardarticolo : "image/featured_1.jpg",
+            title_cardarticolo : "Example1",
+            subtitle_cardarticolo : "Example1",
+            description_cardarticolo : "Example1",
+        },
+        {
+            image_cardarticolo : "image/featured_2.jpg",
+            title_cardarticolo : "Example2",
+            subtitle_cardarticolo : "Example2",
+            description_cardarticolo : "Example2",
+        }
+    ]
 ]
 
 app.get("/", (req, res) => {
-  res.render("home", { data });
+  res.render("home", { data, pretty : true});
 });
 
 app.get("/style/:filename", (req, res) => {
@@ -47,6 +73,10 @@ app.get("/style/:filename", (req, res) => {
 
 app.get("/script/:filename", (req, res) => {
     res.sendFile(path.join(__dirname, "public/js/", req.params.filename));
+});
+
+app.get("/image/:filename", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/img/", req.params.filename));
 });
 
 
@@ -114,6 +144,11 @@ app.get("/admin/delete/:id", (req, res) => {
   res.redirect("/admin");
 });
 */
+
+//
+//// Avvio Server
+//
+
 app.listen(3000, () => {
   console.log("Server avviato su http://localhost:3000");
 });

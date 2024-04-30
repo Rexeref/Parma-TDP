@@ -1,7 +1,9 @@
-include header
+doctype html
+html
+  head
+    include header
 
-body
-    
+  body
     div(class="sidebar-navigation hidden-sm hidden-xs")
         div(class="logo")
             a 
@@ -13,148 +15,145 @@ body
                     a(href="#top")
                         span(class="rect")
                         span(class="circle")
-                        Home
+                        | Home
                 li
                     a(href="#featured")
                         span(class="rect")
                         span(class="circle")
-                        Attrazioni
+                        | Attrazioni
                 li
                     a(href="#video")
                         span(class="rect")
                         span(class="circle")
-                        Video
+                        | Video
                 li
                     a(href="#contact")
                         span(class="rect")
                         span(class="circle")
-                        Contattaci
+                        | Contattaci
 
     div(class="slider")
         div(class="Modern-Slider content-section" id="top")
+
             .item.item-1
-            .img-fill
-                .image
-                .info
-                div
-                    h1 Un viaggio indimenticabile
-                    p
-                    | Lasciati sorprendere da Parma
-                    br
-                    | una città ricca di tesori da scoprire.
-                    .white-button.button
-                    a(href="#featured") Scopri di più
+                .img-fill
+                    .image
+                    .info
+                        div
+                            h1 Un viaggio indimenticabile
+                            p Lasciati sorprendere da Parma
+                                br
+                                | una città ricca di tesori da scoprire.
+                            .white-button.button
+                                a(href="#featured") Scopri di più
 
             .item.item-2
-            .img-fill
-                .image
-                .info
-                div
-                    h1
-                    | Parma 
-                    br
-                    | La culla del gusto
-                    p
-                    | Degusta i prodotti tipici della tradizione culinaria di Parma
-                    br
-                    | scopri la storia che si cela dietro ogni piatto.
-                    .white-button.button
-                    a(href="#featured") Scopri di più
+                .img-fill
+                    .image
+                    .info
+                        div
+                            h1 Parma 
+                                br
+                                | La culla del gusto
+                            p Degusta i prodotti tipici della tradizione culinaria di Parma
+                                br
+                                | scopri la storia che si cela dietro ogni piatto.
+                            .white-button.button
+                                a(href="#featured") Scopri di più
 
             .item.item-3
-            .img-fill
-                .image
-                .info
-                div
-                    h1 La città della musica
-                    p
-                    | Vivi l'emozione della musica classica a Parma, città natale del Maestro Verdi.
-                    .white-button.button
-                    a(href="#featured") scopri di più
+                .img-fill
+                    .image
+                    .info
+                        div
+                            h1 La città della musica
+                            p Vivi l'emozione della musica classica a Parma, città natale del Maestro Verdi.
+                            .white-button.button
+                                a(href="#featured") scopri di più
     
-    div(class="page-content")
-        .page-content
-            section#featured.content-section
-                .section-heading
+    .page-content
+        section#featured.content-section
+            .section-heading
+                h1 
+                    | Migliori
+                    br
+                    em Attrazioni
+                p 
+                    | Visita i luoghi simbolo di Parma
+                    br
+                    | e lasciati conquistare dalle sue meraviglie.
+            
+            .section-content 
+                div(class="owl-carousel owl-theme")
+                    each article in articles
+                        .item
+                            .image 
+                                img(src=article.image_cardarticolo alt="Immagine")
+                                div(class="featured-button button")
+                                    a(href="article/" + article.crumb) Dettagli
+
+                            .text-content
+                                h4()= article.title_cardarticolo
+                                span()= article.subtitle_cardarticolo
+                                p()= article.description_cardarticolo
+
+        section#video.content-section
+            .row
+                .col-md-12
+                    .section-heading
                     h1 
-                        | Migliori
-                        br
-                        em Attrazioni
+                        | Questa è la 
+                        em nostra
+                        |  città.
+                    p Ascoltala, Vivila, Assaporala,
+                    .text-content
                     p 
-                        | Visita i luoghi simbolo di Parma
-                        br
-                        | e lasciati conquistare dalle sue meraviglie.
-                
-                .section-content 
-                    div(class="owl-carousel owl-theme")
-                        // TODO: PER OGNI ELEMENTO
-                            .item
-                                .image 
-                                    img(src="data.###immagine_cardarticolo" alt="")
-                                    div(class="featured-button button")
-                                        a(href="data.###linkarticolo")Dettagli
-                                .text-content
-                                    h4= data.###titolo_cardarticolo
-                                    span= data.###sottotitolo_cardarticolo
-                                    p= data.###descrizione_cardarticolo
+                        | Parma, con il suo fascino senza tempo e i suoi sapori avvolgenti, lascia un'impronta indelebile nel 
+                        | cuore di chiunque vi ponga piede. Scopri la sua storia, assapora i suoi piaceri e lasciati incantare dalla sua bellezza autentica.
+                        | Parma è un'esperienza che va oltre le parole, un luogo da amare e custodire gelosamente nei ricordi.
+                    .accent-button.button
+                    a(href="#contact") Dove è Parma
 
-            section#video.content-section
-                .row
-                    .col-md-12
-                        .section-heading
-                        h1 
-                            | Questa è la 
-                            em nostra
-                            |  città.
-                        p Ascoltala, Vivila, Assaporala,
-                        .text-content
-                        p 
-                            | Parma, con il suo fascino senza tempo e i suoi sapori avvolgenti, lascia un'impronta indelebile nel 
-                            | cuore di chiunque vi ponga piede. Scopri la sua storia, assapora i suoi piaceri e lasciati incantare dalla sua bellezza autentica.
-                            | Parma è un'esperienza che va oltre le parole, un luogo da amare e custodire gelosamente nei ricordi.
-                        .accent-button.button
-                        a(href="#contact") Dove è Parma
-
-                    .col-md-12
-                        .box-video
+                .col-md-12
+                    .box-video
                         .bg-video(style="background-image: url(https://www.fachiro.com/public/img/2PR202021Logo-6364.png);")
                             .bt-play Play
                         .video-container
                             iframe(width="100%" height="520" src="https://youtu.be/qgvVkVwywHA" frameborder="0" allowfullscreen="allowfullscreen")
 
-            section#contact.content-section
-                #map
+        section#map.content-section
+            #contact-content
                     // TODO: Inserire div leaflet maps
-                #contact-content
-                    .section-heading 
-                        h1
-                            | Visita
-                            br
-                            em Parma
 
-                        p
-                            | Prenota ora il tuo tour guidato!
-                            br
-                            | Siamo qui per rendere ogni viaggio indimenticabile. Scrivici per scoprire i nostri servizi personalizzati.
+        section#contact.content-section
+            #contact-content
+                .section-heading 
+                    h1 Visita
+                        br
+                        em Parma
 
-                    .section-content 
-                        form#contact(action="#" method="post")
-                            .row
-                                .col-md-4
-                                fieldset
-                                    input(name="name" type="text" class="form-control" id="name" placeholder="Nome..." required)
-                                .col-md-4
-                                fieldset
-                                    input(name="email" type="email" class="form-control" id="email" placeholder="Email..." required)
-                                .col-md-4
-                                fieldset
-                                    input(name="subject" type="text" class="form-control" id="subject" placeholder="Richiesta..." required)
-                                .col-md-12
-                                fieldset
-                                    textarea(name="message" rows="6" class="form-control" id="message" placeholder="Il tuo messaggio..." required)
-                                .col-md-12
-                                fieldset
-                                    button#form-submit(type="submit" class="btn") Invia Ora
+                    p Prenota ora il tuo tour guidato!
+                        br
+                        | Siamo qui per rendere ogni viaggio indimenticabile. Scrivici per scoprire i nostri servizi personalizzati.
+
+                .section-content 
+                    form(id="contact" action="/question/" method="post")
+                        .row
+                            .col-4
+                            fieldset
+                                input(name="name" type="text" class="form-control" id="name" placeholder="Nome..." required)
+                            .col-4
+                            fieldset
+                                input(name="email" type="email" class="form-control" id="email" placeholder="Email..." required)
+                            .col-4
+                            fieldset
+                                input(name="subject" type="text" class="form-control" id="subject" placeholder="Richiesta..." required)
+                            .col-12
+                            fieldset
+                                textarea(name="message" rows="6" class="form-control" id="message" placeholder="Il tuo messaggio..." required)
+                            .col-12
+                            fieldset
+                                button#form-submit(type="submit" class="btn") Invia Ora
 
     include footer
 
