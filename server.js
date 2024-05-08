@@ -33,10 +33,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("cover_image");
-
+app.use(express.json())
 app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "public/img/photos")));
 app.use(bodyParser.urlencoded({ extended: true }));
+;
 
 //
 //// Gestione Richieste
@@ -61,17 +62,31 @@ app.get("/article/:crumb", (req, res) => {
         randinfos: []
     };
 
-    con.query("SELECT a.image, a.title, a.title_cardarticolo, a.subtitle_cardarticolo, a.description_cardarticolo, a.article, a.coords_X, a.coords_Y, c.name as category_name, r.image as icon, r.information, r.label FROM article a INNER JOIN category c ON(c.ID = a.category_ID) INNER JOIN article_randinfo ar ON(a.ID = ar.article_ID ) INNER JOIN randinfo r ON(r.ID = ar.randinfo_ID) WHERE a.crumb = ?", [req.params.crumb], 
+    con.query("SELECT a.image, a.title, a.title_cardarticolo, a.subtitle_cardarticolo, a.description_cardarticolo, a.article, a.coords_X, a.coords_Y, c.name as category, r.image as icon, r.information, r.label FROM article a INNER JOIN category c ON(c.ID = a.category_ID) INNER JOIN article_randinfo ar ON(a.ID = ar.article_ID ) INNER JOIN randinfo r ON(r.ID = ar.randinfo_ID) WHERE a.crumb = ?", [req.params.crumb], 
         (err, result) => {
             if (err) {
                 console.error('Failed to retrieve article details:', err);
                 res.status(500).send('Database query error');
                 return;
             }
-            console.log(result);
+            //console.log(result);
             data.randinfos = result;
             res.render("article", { data, pretty : true });
         });
+});
+
+app.post("/question", (req, res) => {
+  const { name, email, subject, message } = req.body;
+  
+  const sql = "INSERT INTO questions (name, email, title, content) VALUES (?, ?, ?, ?)";
+  con.query(sql, [name, email, subject, message], (err, result) => {
+      if (err) {
+          console.error('Failed to insert question:', err);
+          res.status(500).send('Database query error');
+          return;
+      }
+      res.redirect("/");
+  });
 });
 
 app.get("/", (req, res) => {
