@@ -9,10 +9,13 @@ const mysql = require("mysql");
 const app = express();
 const bodyParser = require("body-parser");
 const FileSystem = require("fs");
+const { fileURLToPath } = require("url");
 
 // Pug
 app.set("view engine", "pug");
 app.set("views", "./views");
+app.set("json spaces", 0);
+
 
 // connessione DBMS
 var con = mysql.createPool({
@@ -89,6 +92,59 @@ app.post("/question", (req, res) => {
   });
 });
 
+app.get("/api", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/api.html"));
+});
+
+app.get("/api/list", (req, res) => {
+
+  con.query("SELECT crumb FROM article", (err, result) => {
+    if (err) {
+        console.error('Failed to retrieve articles:', err);
+        res.status(500).send('Database query error');
+        return;
+    };
+    res.json(result);
+  });
+
+});
+
+app.get("/api/article/:crumb", (req, res) => {
+  let finalResult = {};
+  let queriesCompleted = 0;
+
+  function checkAndSendResponse() {
+      if (queriesCompleted === 2) {
+          res.json(finalResult);
+      }
+  }
+
+  con.query("SELECT a.image, a.title, a.title_cardarticolo, a.subtitle_cardarticolo, a.description_cardarticolo, a.article, a.coords_X, a.coords_Y, c.name as category FROM article a INNER JOIN category c ON(c.ID = a.category_ID) WHERE a.crumb = ?", [req.params.crumb],
+      (err, result) => {
+          if (err) {
+              console.error('Failed to retrieve article details:', err);
+              res.status(500).send('Database query error');
+              return;
+          }
+          finalResult.articleDetails = result;
+          queriesCompleted++;
+          checkAndSendResponse();
+      });
+
+  con.query("SELECT r.image as icon, r.information, r.label FROM article a INNER JOIN category c ON(c.ID = a.category_ID) INNER JOIN article_randinfo ar ON(a.ID = ar.article_ID ) INNER JOIN randinfo r ON(r.ID = ar.randinfo_ID) WHERE a.crumb = ?", [req.params.crumb],
+      (err, result) => {
+          if (err) {
+              console.error('Failed to retrieve article details:', err);
+              res.status(500).send('Database query error');
+              return;
+          }
+          finalResult.randomInfo = result;
+          queriesCompleted++;
+          checkAndSendResponse();
+      });
+});
+
+
 app.get("/", (req, res) => {
     var data = {
         crumb: "Home",
@@ -111,75 +167,6 @@ app.get("/", (req, res) => {
 app.get("*", (req, res) => {
   res.redirect('/');
 });
-
-/*
-app.get("/posts/:id", (req, res) => {
-  const postId = parseInt(req.params.id);
-  const post = posts.find((post) => post.id === postId);
-  res.render("post", { post });
-});
-
-app.get("/admin", (req, res) => {
-  res.render("admin", { posts });
-});
-
-app.get("/admin/modify/:id", (req, res) => {
-  const postId = parseInt(req.params.id);
-  const post = posts.find((post) => post.id === postId);
-  res.render("mod-post", { post });
-});
-
-app.post("/admin/posts_modify/:id", (req, res) => {
-  const { title, content } = req.body;
-  const postId = parseInt(req.params.id);
-  const index = posts.findIndex((post) => post.id === postId);
-  posts[index].title = title;
-  posts[index].content = content;
-  savePosts();
-  res.redirect("/");
-});
-
-app.post("/comment/:id", (req, res) => {
-  const { comment } = req.body;
-  const postId = parseInt(req.params.id);
-  const index = posts.findIndex((post) => post.id === postId);
-  posts[index].comments.push(comment);
-  res.redirect("/posts/" + postId);
-});
-
-app.post("/admin/posts_add", upload, (req, res) => {
-  const { title, content } = req.body;
-  const newPost = {
-    id: posts.length + 1,
-    title,
-    comments: [],
-    cover_image: req.file ? req.file.filename : null,
-    content,
-  };
-
-  posts.unshift(newPost);
-  savePosts();
-  res.redirect("/");
-});
-
-app.get("/admin/new", (req, res) => {
-  res.render("add-post");
-});
-
-app.get("/admin/delete/:id", (req, res) => {
-  const postId = parseInt(req.params.id);
-  const postIndex = posts.findIndex((post) => post.id === postId);
-  if (postIndex !== -1) {
-    posts.splice(postIndex, 1);
-  }
-  savePosts();
-  res.redirect("/admin");
-});
-*/
-
-//
-//// Avvio Server
-//
 
 app.listen(3000, () => {
   console.log("Server avviato su http://localhost:3000");

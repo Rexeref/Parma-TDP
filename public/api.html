@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articoli</title>
+</head>
+<body>
+    <h1>API di accesso ai dati Articoli</h1>
+
+    <section>
+        <h2>Elenco degli articoli</h2>
+        <p>L'API fornisce un endpoint per ottenere un elenco di articoli.</p>
+        <pre>
+            <code>
+                GET /api/list
+            </code>
+        </pre>
+        <p>La chiamata a questo endpoint restituirà un elenco di crumb (identificatori univoci) che possono essere utilizzati per recuperare i singoli articoli.</p>
+    </section>
+
+    <section>
+        <h2>Accesso ai dati di un singolo articolo</h2>
+        <p>L'API fornisce anche un endpoint per ottenere i dettagli di un articolo specifico.</p>
+        <pre>
+            <code>
+                GET /api/article/:crumb
+            </code>
+        </pre>
+        <p>Dove <code>:crumb</code> è l'identificatore univoco dell'articolo.</p>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <p>
+            Sito realizzato da Matteo Vona e Vincenzo N. Cesqui Podiani - 
+            <a href="/">Home</a>
+        </p>
+        <script>
+            window.jQuery || document.write('<script src="script/jquery-1.11.2.min.js"><\/script>')
+        </script>
+        <script src="script/plugins.js"></script>
+        <script src="script/main.js"></script>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    </section>
+</body>
+</html>
