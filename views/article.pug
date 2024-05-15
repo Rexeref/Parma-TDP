@@ -31,7 +31,7 @@ html
               span.category= data.randinfos[0].category
               div
                 #map(style='width: 100%; height: 400px;')
-                script!="document.addEventListener('DOMContentLoaded', function() {var coordsX = " + data.randinfos[0].coords_X + ";var coordsY = " + data.randinfos[0].coords_Y + ";var map = L.map('map').setView([coordsX, coordsY], 18);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19,attribution: '© OpenStreetMap'}).addTo(map);});"
+                script!="document.addEventListener('DOMContentLoaded', function() {var coordsX = " + data.randinfos[0].coords_X + ";var coordsY = " + data.randinfos[0].coords_Y + ";var map = L.map('map').setView([coordsX, coordsY], 18);var marker = L.marker([coordsX, coordsY]).addTo(map);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19,attribution: '© OpenStreetMap'}).addTo(map);});"
               div!= data.randinfos[0].article
               
     include footer.pug
