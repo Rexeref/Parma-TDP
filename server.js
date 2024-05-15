@@ -108,6 +108,10 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("*", (req, res) => {
+  res.redirect('/');
+});
+
 /*
 app.get("/posts/:id", (req, res) => {
   const postId = parseInt(req.params.id);
